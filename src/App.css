@@ -1,5 +1,6 @@
-body {
-  height: 100vh;
+/* body {
+  min-height: 100vh;
+  height: 100%;
   background: hsla(197, 100%, 63%, 1);
 
   background: linear-gradient(
@@ -21,4 +22,12 @@ body {
   );
 
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#40C9FF", endColorstr="#E81CFF", GradientType=1 );
+} */
+
+.App {
+  min-height: 100vh;
+  height: 100%;
+  background-image: url("../src/assets/bg.png");
+  background-position: center;
+  background-size: cover;
 }
