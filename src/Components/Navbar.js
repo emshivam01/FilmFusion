@@ -1,6 +1,6 @@
 const Navbar = () => {
   return (
-    <div className="text-white flex justify-between items-center py-4 px-5 w-full">
+    <div className="text-white flex justify-between items-center py-4 px-5 md:px-10 md:py-8 w-full">
       <div>
         <h1 className="text-2xl"> FilmFusion</h1>
       </div>
