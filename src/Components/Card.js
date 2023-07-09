@@ -27,13 +27,13 @@ const Card = ({ title, poster_path, release_date, rating, overview }) => {
 
   return (
     <div
-      className="max-w-[345px] w-full bg-white shadow-xl rounded-lg overflow-hidden flex flex-col m-3"
+      className="max-w-xs w-full bg-white shadow-xl rounded-lg overflow-hidden flex flex-col m-3"
       onMouseEnter={handleMouse}
       onMouseLeave={handleMouse}
     >
       <div className="relative flex justify-center items-center">
         <img
-          className="w-96 h-[420px] object-cover object-top shadow-xl"
+          className="w-80 h-[400px] object-cover object-top shadow-xl"
           src={`https://image.tmdb.org/t/p/original${poster_path}`}
           alt={`${title} - Poster`}
         />

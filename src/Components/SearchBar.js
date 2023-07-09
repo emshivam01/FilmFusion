@@ -5,7 +5,7 @@ const SearchBar = ({ search, setSearch }) => {
         value={search}
         placeholder="Enter movie name..."
         onChange={(e) => setSearch(e.target.value)}
-        className="w-[345px] md:w-96 rounded-md h-12 p-3 text-center outline-none text-lg placeholder:text-lg placeholder:text-black placeholder:text-center"
+        className="w-80 md:w-96 lg:w-[600px] rounded-md h-12 p-3 text-center outline-none text-lg placeholder:text-lg placeholder:text-black placeholder:text-center"
       />
     </div>
   );
