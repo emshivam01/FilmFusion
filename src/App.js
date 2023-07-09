@@ -5,7 +5,7 @@ import Navbar from "./Components/Navbar";
 import SearchBar from "./Components/SerchBar";
 
 function App() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("ocean ");
 
   return (
     <div className="App flex flex-col items-center">

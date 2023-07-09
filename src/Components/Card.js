@@ -1,38 +1,56 @@
-import data from "./LocalData/Data";
 import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import TurnedInIcon from "@mui/icons-material/TurnedIn";
-import ScheduleIcon from "@mui/icons-material/Schedule";
 import GradeIcon from "@mui/icons-material/Grade";
 import { useState } from "react";
-const descLength = 100;
+const descLength = 400;
+const titleLength = 30;
 
-const Card = () => {
-  const shortDesc =
-    data.results[0].overview.length > descLength
-      ? data.results[0].overview.slice(0, descLength)
-      : data.results[0].overview;
-
+const Card = ({ title, poster_path, release_date, rating, overview }) => {
   const [isMarked, setIsMarked] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouse = () => {
+    setIsHovered(!isHovered);
+  };
+
+  const description =
+    overview?.length >= descLength ? overview.slice(0, descLength) : overview;
+  const newTitle =
+    title.length >= titleLength ? title.slice(0, titleLength) : title;
 
   return (
-    <div className="bg-[#F9F5F6] w-[300px] max-w-lg shadow-xl p-[10px] rounded-lg flex flex-col m-3 ">
-      <div className="flex justify-center items-center">
+    <div
+      className="max-w-[345px] w-full bg-white shadow-xl rounded-lg overflow-hidden flex flex-col m-3"
+      onMouseEnter={handleMouse}
+      onMouseLeave={handleMouse}
+    >
+      <div className=" relative flex justify-center items-center">
         <img
-          className="w-full h-80 shadow-xl rounded-md"
-          src={`https://image.tmdb.org/t/p/original${data.results[0].poster_path}`}
-          alt="Poster"
+          className="w-96 h-[420px] object-cover shadow-xl "
+          src={`https://image.tmdb.org/t/p/original${poster_path}`}
+          alt={`${title} - Poster`}
         />
+        <div
+          className={`${
+            isHovered ? "opacity-60" : "opacity-0"
+          } transition-opacity duration-300 absolute inset-0 bg-black flex items-center justify-center`}
+        >
+          <p className="text-white text-center p-4">{description}</p>
+        </div>
       </div>
-      <div className="flex justify-between mt-2 ">
+      <div className="flex justify-between p-2">
         <div>
-          <h2 className="font-bold text-lg">{data.results[0].title}</h2>
-          <div className="flex gap-8">
+          <h2 title={title} className="font-bold text-lg ">
+            {newTitle}
+          </h2>
+          <div className="flex items-center gap-4">
             <div className="flex gap-1 items-center">
               <GradeIcon style={{ fontSize: 20 }} />
-              <p className="font-medium text-lg">
-                {data.results[0].vote_average.toFixed(1)}
-              </p>
+              <p className="font-medium text-lg">{rating.toFixed(1)}</p>
             </div>
+            <span className="font-medium text-lg">
+              {release_date.slice(0, 4)}
+            </span>
           </div>
         </div>
         <button
@@ -47,9 +65,6 @@ const Card = () => {
           )}
         </button>
       </div>
-      <p title={data.results[0].overview} className="mt-1">
-        {shortDesc}
-      </p>
     </div>
   );
 };
