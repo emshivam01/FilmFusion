@@ -4,7 +4,7 @@ import TurnedInIcon from "@mui/icons-material/TurnedIn";
 import GradeIcon from "@mui/icons-material/Grade";
 
 const descLength = 400;
-const titleLength = 30;
+const titleLength = 25;
 
 const Card = ({ title, poster_path, release_date, rating, overview }) => {
   const [isMarked, setIsMarked] = useState(false);
@@ -26,12 +26,12 @@ const Card = ({ title, poster_path, release_date, rating, overview }) => {
   };
 
   return (
-    <div
-      className="max-w-xs w-full bg-white shadow-xl rounded-lg overflow-hidden flex flex-col m-3"
-      onMouseEnter={handleMouse}
-      onMouseLeave={handleMouse}
-    >
-      <div className="relative flex justify-center items-center">
+    <div className="max-w-xs w-full bg-white shadow-xl rounded-sm overflow-hidden flex flex-col m-3">
+      <div
+        className="relative flex justify-center items-center"
+        onMouseEnter={handleMouse}
+        onMouseLeave={handleMouse}
+      >
         <img
           className="w-80 h-[400px] object-cover object-top shadow-xl"
           src={`https://image.tmdb.org/t/p/original${poster_path}`}

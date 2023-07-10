@@ -36,28 +36,36 @@ const Body = ({ search }) => {
   }, [fetchMovies]);
 
   return (
-    <div className="my-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 justify-items-center align-content-start lg:px-20">
-      {search === ""
-        ? popularMovies.map((movie) => (
-            <Card
-              key={movie.id}
-              title={movie.title}
-              poster_path={movie.poster_path}
-              rating={movie.vote_average}
-              overview={movie.overview}
-              release_date={movie.release_date}
-            />
-          ))
-        : movies.map((movie) => (
-            <Card
-              key={movie.id}
-              title={movie.title}
-              poster_path={movie.poster_path}
-              rating={movie.vote_average}
-              overview={movie.overview}
-              release_date={movie.release_date}
-            />
-          ))}
+    <div>
+      {search === "" && (
+        <span className="text-3xl lg:px-[90px]  text-white ">
+          Popular Movies:{" "}
+        </span>
+      )}
+
+      <div className="my-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 justify-items-center align-content-start lg:px-20">
+        {search === ""
+          ? popularMovies.map((movie) => (
+              <Card
+                key={movie.id}
+                title={movie.title}
+                poster_path={movie.poster_path}
+                rating={movie.vote_average}
+                overview={movie.overview}
+                release_date={movie.release_date}
+              />
+            ))
+          : movies.map((movie) => (
+              <Card
+                key={movie.id}
+                title={movie.title}
+                poster_path={movie.poster_path}
+                rating={movie.vote_average}
+                overview={movie.overview}
+                release_date={movie.release_date}
+              />
+            ))}
+      </div>
     </div>
   );
 };

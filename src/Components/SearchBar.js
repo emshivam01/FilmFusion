@@ -1,6 +1,6 @@
 const SearchBar = ({ search, setSearch }) => {
   return (
-    <div className="flex items-center gap-2  mt-10 mb-4 ">
+    <div className="flex items-center gap-2  mt-10 mb-6 ">
       <input
         value={search}
         placeholder="Enter movie name..."
