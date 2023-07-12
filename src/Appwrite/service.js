@@ -1,12 +1,8 @@
-import { Client, Account, ID } from "appwrite";
+import { Client, Account } from "appwrite";
 
 const client = new Client();
 
-client
-  .setEndpoint("https://cloud.appwrite.io/v1/")
-  .setProject("64ab9aac08b91cd6e771");
-
-const Headers = { Accept: "application/json", Origin: "http://localhost:3000" };
+client.setEndpoint("http://localhost/v1").setProject("64aecd511bef766b28d3");
 
 export const account = new Account(client, Headers);
 

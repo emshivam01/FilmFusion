@@ -7,9 +7,9 @@ const Navbar = () => {
         <h1 className="text-2xl lg:text-3xl"> FilmFusion</h1>
       </div>
       <div className="flex gap-8 items-center">
-        <Link to="/login">
+        <Link to="/signup">
           <button className="flex gap-2 items-center text-lg bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-lg px-2 py-1 lg:px-4 lg:py-2">
-            Log in
+            Sign up
           </button>
         </Link>
       </div>

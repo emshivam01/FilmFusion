@@ -2,16 +2,18 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import Card from "./Card";
 
-const Body = ({ search }) => {
+const Body = ({ search, page }) => {
   const [movies, setMovies] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
 
   const fetchPopularMovies = async () => {
     try {
       const response = await axios.get(
-        "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1&api_key=514d9b749a7a5c7aba15e6e5fe6b3c29"
+        `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}&api_key=514d9b749a7a5c7aba15e6e5fe6b3c29`
       );
-      setPopularMovies(response.data.results);
+      setPopularMovies(
+        response.data.results.filter((item) => item.poster_path)
+      );
     } catch (error) {
       console.log(error);
       console.log(error.message);
@@ -33,13 +35,13 @@ const Body = ({ search }) => {
   useEffect(() => {
     fetchPopularMovies();
     fetchMovies();
-  }, [fetchMovies]);
+  }, [fetchMovies, page]);
 
   return (
-    <div>
+    <div className="">
       {search === "" && (
-        <span className="text-3xl lg:px-[90px]  text-white ">
-          Popular Movies:{" "}
+        <span className="text-3xl mx-auto block mt-4 underline underline-offset-4  text-center  lg:px-[90px]  text-white ">
+          Popular Movies{" "}
         </span>
       )}
 
