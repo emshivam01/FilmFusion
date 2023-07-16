@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import TurnedInIcon from "@mui/icons-material/TurnedIn";
 import GradeIcon from "@mui/icons-material/Grade";
+import AppContext from "./AppContext";
+import { databases } from "./Appwrite/service";
+import { ID } from "appwrite";
 
 const descLength = 400;
 const titleLength = 25;
@@ -9,6 +12,8 @@ const titleLength = 25;
 const Card = ({ title, poster_path, release_date, rating, overview }) => {
   const [isMarked, setIsMarked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+
+  const { isLoggedIn } = useContext(AppContext);
 
   const handleMouse = () => {
     setIsHovered((prevIsHovered) => !prevIsHovered);
@@ -23,6 +28,31 @@ const Card = ({ title, poster_path, release_date, rating, overview }) => {
 
   const toggleMarked = () => {
     setIsMarked((prevIsMarked) => !prevIsMarked);
+  };
+
+  const bookMark = async () => {
+    try {
+      if (isLoggedIn) {
+        const data = await databases.createDocument(
+          "64af8ec9a356d65ce49f",
+          "64af8ed0e06368474ca3",
+          ID.unique(),
+          {
+            title: title,
+            released_year: release_date.slice(0, 4),
+            description: overview,
+            poster_path: poster_path,
+            rating: rating.toFixed(1),
+          }
+        );
+        toggleMarked();
+        console.log(data);
+      } else {
+        alert("Please Login before adding to watchlist ");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -59,9 +89,9 @@ const Card = ({ title, poster_path, release_date, rating, overview }) => {
           </div>
         </div>
         <button
+          onClick={bookMark}
           className="flex mt-[6px]"
           title="Add to watchlist"
-          onClick={toggleMarked}
         >
           {isMarked ? (
             <TurnedInIcon style={{ fontSize: 25 }} />
