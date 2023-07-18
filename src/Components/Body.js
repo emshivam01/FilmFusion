@@ -1,41 +1,63 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Card from "./Card";
+import { account } from "./Appwrite/service";
+import AppContext from "./AppContext";
+import UserContext from "./UserContext";
 
-const Body = ({ search, page }) => {
+const Body = ({ search, page, toast }) => {
+  const { isLoggedIn, setIsLoggedIn } = useContext(AppContext);
+  const { setUserDetails } = useContext(UserContext);
+
   const [movies, setMovies] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
 
-  const fetchPopularMovies = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}&api_key=514d9b749a7a5c7aba15e6e5fe6b3c29`
-      );
-      setPopularMovies(
-        response.data.results.filter((item) => item.poster_path)
-      );
-    } catch (error) {
-      console.log(error);
-      console.log(error.message);
-    }
-  };
+  useEffect(() => {
+    const getUserDetails = () => {
+      const data = account.get();
 
-  const fetchMovies = useCallback(async () => {
-    try {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=514d9b749a7a5c7aba15e6e5fe6b3c29`
+      data.then(
+        function (response) {
+          setUserDetails(response);
+          setIsLoggedIn(!isLoggedIn);
+        },
+        function (error) {}
       );
-      setMovies(response.data.results.filter((item) => item.poster_path));
-    } catch (error) {
-      console.log(error);
-      console.log(error.message);
-    }
-  }, [search]);
+    };
+    getUserDetails();
+  }, []);
 
   useEffect(() => {
+    const fetchPopularMovies = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}&api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+        );
+        setPopularMovies(
+          response.data.results.filter((item) => item.poster_path)
+        );
+      } catch (error) {
+        console.log(error);
+        console.log(error.message);
+      }
+    };
     fetchPopularMovies();
+  }, [page]);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=514d9b749a7a5c7aba15e6e5fe6b3c29`
+        );
+        setMovies(response.data.results.filter((item) => item.poster_path));
+      } catch (error) {
+        console.log(error);
+        console.log(error.message);
+      }
+    };
     fetchMovies();
-  }, [fetchMovies, page]);
+  }, [search]);
 
   return (
     <div className="">
@@ -68,6 +90,7 @@ const Body = ({ search, page }) => {
               />
             ))}
       </div>
+      {console.log(setIsLoggedIn, 93)}
     </div>
   );
 };

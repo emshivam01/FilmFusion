@@ -3,9 +3,15 @@ import Navbar from "./Navbar";
 import AppContext from "./AppContext";
 import { databases } from "./Appwrite/service";
 import WatchListCard from "./WatchlistCard";
+import { Query } from "appwrite";
+import UserContext from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Watchlist = () => {
   const { isLoggedIn } = useContext(AppContext);
+  const { userDetails } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const [movies, setMovies] = useState([]);
 
@@ -14,12 +20,13 @@ const Watchlist = () => {
       if (isLoggedIn) {
         const data = await databases.listDocuments(
           "64af8ec9a356d65ce49f",
-          "64af8ed0e06368474ca3"
+          "64af8ed0e06368474ca3",
+          [Query.equal("userId", [userDetails.$id])]
         );
-        console.log(data.documents);
         setMovies(data.documents);
       } else {
-        alert("Please Login before adding to watchlist ");
+        console.log("Login First");
+        navigate("/login");
       }
     } catch (error) {
       console.log(error);
@@ -28,7 +35,7 @@ const Watchlist = () => {
 
   useEffect(() => {
     getBookmark();
-  }, []);
+  });
 
   return (
     <>
@@ -44,6 +51,7 @@ const Watchlist = () => {
               overview={movie.overview}
               release_date={movie.release_date}
               id={movie.$id}
+              key={movie.$id}
             />
           );
         })}
