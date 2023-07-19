@@ -19,7 +19,7 @@ const Body = ({ search, page, toast }) => {
       data.then(
         function (response) {
           setUserDetails(response);
-          setIsLoggedIn(!isLoggedIn);
+          setIsLoggedIn(true);
         },
         function (error) {}
       );
@@ -90,7 +90,6 @@ const Body = ({ search, page, toast }) => {
               />
             ))}
       </div>
-      {console.log(setIsLoggedIn, 93)}
     </div>
   );
 };

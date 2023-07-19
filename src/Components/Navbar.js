@@ -1,17 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { account } from "./Appwrite/service";
 import { useContext } from "react";
 import AppContext from "./AppContext";
 
 const Navbar = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AppContext);
+
+  const navigate = useNavigate();
+
   const logOutUser = async () => {
     try {
       const data = await account.deleteSession("current");
-      console.log(data);
+
+      // console.log(data);
       setIsLoggedIn(false);
+      navigate("/");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -22,8 +27,8 @@ const Navbar = () => {
           <h1 className="text-2xl font-medium lg:text-3xl">FilmFusion</h1>
         </Link>
       </div>
-      <div className="flex gap-8 items-center">
-        <Link className="text-white" to="/watchlist">
+      <div className="flex gap-8  items-center">
+        <Link className="text-white text-xl" to="/watchlist">
           Watchlist
         </Link>
 

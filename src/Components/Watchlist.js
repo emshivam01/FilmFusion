@@ -6,10 +6,11 @@ import WatchListCard from "./WatchlistCard";
 import { Query } from "appwrite";
 import UserContext from "./UserContext";
 import { useNavigate } from "react-router-dom";
+import { account } from "./Appwrite/service";
 
 const Watchlist = () => {
-  const { isLoggedIn } = useContext(AppContext);
-  const { userDetails } = useContext(UserContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AppContext);
+  const { userDetails, setUserDetails } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -17,7 +18,7 @@ const Watchlist = () => {
 
   const getBookmark = async () => {
     try {
-      if (isLoggedIn) {
+      if (isLoggedIn && userDetails) {
         const data = await databases.listDocuments(
           "64af8ec9a356d65ce49f",
           "64af8ed0e06368474ca3",
@@ -25,17 +26,32 @@ const Watchlist = () => {
         );
         setMovies(data.documents);
       } else {
-        console.log("Login First");
-        navigate("/login");
+        // console.log("Login First");
+        navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
   useEffect(() => {
+    const getUserDetails = () => {
+      const data = account.get();
+
+      data.then(
+        function (response) {
+          setUserDetails(response);
+          setIsLoggedIn(true);
+        },
+        function (error) {}
+      );
+    };
+    getUserDetails();
+  }, []);
+
+  useEffect(() => {
     getBookmark();
-  });
+  }, [isLoggedIn, userDetails]);
 
   return (
     <>

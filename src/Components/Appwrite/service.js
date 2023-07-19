@@ -13,16 +13,3 @@ export const databases = new Databases(
   process.env.REACT_APP_DATABASE_ID
 );
 
-// export const createAccount = ({ email, password }) => {
-//   const account = new Account(client);
-
-//   const promise = account.create(ID.unique, email, password);
-//   promise.then(
-//     function (response) {
-//       console.log(response); // Success
-//     },
-//     function (error) {
-//       console.log(error); // Failure
-//     }
-//   );
-// };

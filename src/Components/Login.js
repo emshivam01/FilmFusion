@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { account } from "./Appwrite/service";
 import AppContext from "./AppContext";
@@ -14,6 +14,22 @@ const Login = ({ toast }) => {
   const { setUserDetails } = useContext(UserContext);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const getUserDetails = () => {
+      const data = account.get();
+
+      data.then(
+        function (response) {
+          setUserDetails(response);
+          setIsLoggedIn(true);
+          navigate("/");
+        },
+        function (error) {}
+      );
+    };
+    getUserDetails();
+  }, []);
 
   const loginUser = (e) => {
     e.preventDefault();
