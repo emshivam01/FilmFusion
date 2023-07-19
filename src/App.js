@@ -10,7 +10,7 @@ import { UserProvider } from "./Components/UserContext";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-  const [search, setSearch] = useState("Thor");
+  const [search, setSearch] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
