@@ -26,6 +26,7 @@ const WatchListCard = ({
         "64af8ed0e06368474ca3",
         id
       );
+      setIsMarked(false);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -66,7 +67,7 @@ const WatchListCard = ({
         <button
           onClick={removeBookMark}
           className="flex mt-[6px]"
-          title="Add to watchlist"
+          title="Add/Remove to watchlist"
         >
           {isMarked ? (
             <TurnedInIcon style={{ fontSize: 25 }} />

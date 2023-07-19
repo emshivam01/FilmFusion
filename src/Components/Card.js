@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import TurnedInIcon from "@mui/icons-material/TurnedIn";
 import GradeIcon from "@mui/icons-material/Grade";
 import AppContext from "./AppContext";
 import { databases } from "./Appwrite/service";
 import { ID } from "appwrite";
+import UserContext from "./UserContext";
 
 const descLength = 400;
 const titleLength = 25;
@@ -14,6 +15,8 @@ const Card = ({ title, poster_path, release_date, rating, overview }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const { isLoggedIn } = useContext(AppContext);
+
+  const { userDetails } = useContext(UserContext);
 
   const handleMouse = () => {
     setIsHovered((prevIsHovered) => !prevIsHovered);
@@ -43,6 +46,7 @@ const Card = ({ title, poster_path, release_date, rating, overview }) => {
             description: overview,
             poster_path: poster_path,
             rating: rating.toFixed(1),
+            userId: userDetails.$id,
           }
         );
         toggleMarked();
